@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="phone.css">
+</head>
+<body style="margin:0;padding:0;box-sizing:border-box;overflow: hidden;height: 100vh;width: 100vw;">
+    <div class="panel">
+        <!-- <canvas id="mainCanvas" style="background-color: aqua;"></canvas> -->
+    </div>
+    <script>
+        let canvas;
+        GlobalGameObject = {};
+        let enterGame;
+        let togPlaySec;
+        let startGame;
+        let togBoard;
+        let togFile;
+        let screen;
+        let wsConnected;
+        let runAfterMsg;
+        let editUserName;
+        let mute;
+        let loadAnimation;
+        let iconClick;
+        const bgSong = new Audio();
+        class playSound{
+            constructor(sound)
+            {
+                this.sound = `./audio/${sound}`;
+                this.audio = new Audio();
+                this.audio.src = this.sound;
+                this.volume = .5;
+                this.audio.play()
+            }
+        }
+        bgSong.src = './audio/battleThemeA.mp3';
+        bgSong.volume = .2;
+        bgSong.addEventListener('ended', e =>{
+            bgSong.play()
+        })
+        const ws = new WebSocket('ws://localhost:9000');
+        ws.addEventListener('open', e =>{
+            wsConnected = true
+        })
+
+        ws.addEventListener('message', ({data}) =>{
+            runAfterMsg(JSON.parse(data))
+        })
+    </script>
+    <script src="./designjs/functions.js" type="module"></script>
+    <script src="./designjs/components.js" type="module"></script>
+    <script type="module" src="/jsFiles/main.js"></script>
+</body>
+</html>
